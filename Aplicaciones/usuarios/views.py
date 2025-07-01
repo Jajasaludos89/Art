@@ -5,6 +5,7 @@ from .forms import RegistroForm
 from .models import Usuario
 from django.http import HttpResponseForbidden
 
+
 # Registro de usuario
 def registro_usuario(request):
     if request.method == 'POST':
@@ -15,7 +16,7 @@ def registro_usuario(request):
             return redirect('dashboard')
     else:
         form = RegistroForm()
-    return render(request, 'usuarios/registro.html', {'form': form})
+    return render(request, 'registro.html', {'form': form})
 
 # Login
 def login_usuario(request):
@@ -28,7 +29,7 @@ def login_usuario(request):
             return redirect('dashboard')
         else:
             return render(request, 'usuarios/login.html', {'error': 'Credenciales incorrectas'})
-    return render(request, 'usuarios/login.html')
+    return render(request, 'login.html')
 
 # Logout
 def logout_usuario(request):

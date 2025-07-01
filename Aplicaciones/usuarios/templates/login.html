@@ -9,19 +9,17 @@
             <div class="alert alert-danger">{{ error }}</div>
         {% endif %}
 
-        <form id="loginForm" method="post" novalidate>
+        <form id="form_login" method="post" novalidate>
             {% csrf_token %}
-            
+
             <div class="mb-3">
                 <label for="username" class="form-label">Usuario</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Usuario" required>
-                <div class="invalid-feedback">Por favor, ingresa tu usuario.</div>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Usuario">
             </div>
 
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required>
-                <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña">
             </div>
 
             <div class="d-grid">
@@ -35,30 +33,33 @@
     </div>
 </div>
 
+
 <script>
-$(document).ready(function () {
-    $('#loginForm').on('submit', function (e) {
-        let isValid = true;
-
-        if ($('#username').val().trim() === '') {
-            $('#username').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#username').removeClass('is-invalid');
-        }
-
-        if ($('#password').val().trim() === '') {
-            $('#password').addClass('is-invalid');
-            isValid = false;
-        } else {
-            $('#password').removeClass('is-invalid');
-        }
-
-        if (!isValid) {
-            e.preventDefault();
+    $("#form_login").validate({
+        rules: {
+            "username": {
+                required: true,
+                minlength: 3,
+                maxlength: 50
+            },
+            "password": {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            }
+        },
+        messages: {
+            "username": {
+                required: "Por favor, ingresa tu nombre de usuario",
+                minlength: "Debe tener al menos 3 caracteres",
+                maxlength: "No debe exceder los 50 caracteres"
+            },
+            "password": {
+                required: "Por favor, ingresa tu contraseña",
+                minlength: "Debe tener al menos 5 caracteres",
+                maxlength: "No debe exceder los 50 caracteres"
+            }
         }
     });
-});
 </script>
-
 {% endblock %}

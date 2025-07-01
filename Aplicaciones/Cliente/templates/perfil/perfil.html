@@ -1,0 +1,39 @@
+{% extends 'plantilla.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Mi Perfil</h2>
+
+  <div class="card shadow">
+    <div class="card-body">
+      <h5 class="card-title">{{ user.username }}</h5>
+      <p><strong>Nombre:</strong> {{ user.first_name }}</p>
+      <p><strong>Apellido:</strong> {{ user.last_name }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+      <p><strong>Tipo de usuario:</strong> {{ user.tipo_usuario|capfirst }}</p>
+
+      <a href="{% url 'editar_perfil' %}" class="btn btn-primary">Editar Perfil</a>
+      <button onclick="confirmarEliminacion({{ user.id }})" class="btn btn-danger">Eliminar Perfil</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function confirmarEliminacion(id) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¡Esta acción no se puede deshacer!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = `/cliente/eliminar/${id}/`;
+      }
+    });
+  }
+</script>
+{% endblock %}
